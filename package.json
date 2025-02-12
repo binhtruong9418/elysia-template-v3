@@ -6,9 +6,14 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@elysiajs/swagger": "^1.2.0",
+    "@mikro-orm/core": "^6.4.5",
+    "@mikro-orm/postgresql": "^6.4.5",
+    "elysia": "latest",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.8",
     "bun-types": "latest"
   },
   "module": "src/index.js"
