@@ -47,23 +47,7 @@ const startApp = async () => {
           }
         }
       ))
-      .use(
-        opentelemetry({
-          spanProcessors: [
-            new BatchSpanProcessor(
-              new OTLPTraceExporter({
-                url: "https://oo.fcs.ninja/api/default/traces",
-                headers: {
-                  Authorization: "Basic YWRtaW5AZmNzLm5pbmphOnBLUjh4TnZFeGZ4NTF3T1A=",
-                  organization: "default",
-                  "stream-name": "elysia-template-v3"
-                }
-              })
-            )
-          ],
-          serviceName: "elysia-template-v3",
-        })
-      )
+      .use(opentelemetry())
       .group("/api", group =>
         group.use(userController)
       )
