@@ -4,7 +4,8 @@ import {RequestContext} from "@mikro-orm/core";
 import responseMiddleware from "./middlewares/responseMiddleware";
 import errorMiddleware from "./middlewares/errorMiddleware";
 import userController from "./controllers/user.controller";
-import { swagger } from '@elysiajs/swagger'
+import {swagger} from '@elysiajs/swagger'
+import {cors} from '@elysiajs/cors'
 
 const startApp = async () => {
   try {
@@ -12,6 +13,7 @@ const startApp = async () => {
     //sync entities classes to database
     await dataSource.orm.getSchemaGenerator().updateSchema();
     const app = new Elysia()
+      .use(cors())
       .onBeforeHandle(() => RequestContext.enter(dataSource.em))
       .onAfterHandle(responseMiddleware)
       .onError(errorMiddleware)
