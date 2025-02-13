@@ -1,10 +1,7 @@
-import { defineConfig } from '@mikro-orm/postgresql';
+import {defineConfig, PostgreSqlDriver} from '@mikro-orm/postgresql';
 
 export default defineConfig({
+  driver: PostgreSqlDriver,
   entities: ['src/entities'],
-  dbName: 'elysia-mikro-orm',
-  port: 5432,
-  host: 'localhost',
-  user: 'postgres',
-  password: '1',
+  clientUrl: 'postgresql://postgres:1@localhost:5432/elysia-mikro-orm',
 });

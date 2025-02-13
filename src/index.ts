@@ -22,9 +22,9 @@ const startApp = async () => {
           provider: 'swagger-ui',
           documentation: {
             info: {
-              title: 'Elysia template',
+              title: 'Elysia template v3',
               description: 'Elysia template API Documentation',
-              version: '1.0.0',
+              version: '1.0.3',
             },
             components: {
               securitySchemes: {
