@@ -6,6 +6,9 @@ import errorMiddleware from "./middlewares/errorMiddleware";
 import userController from "./controllers/user.controller";
 import {swagger} from '@elysiajs/swagger'
 import {cors} from '@elysiajs/cors'
+import {opentelemetry} from '@elysiajs/opentelemetry'
+import {BatchSpanProcessor} from '@opentelemetry/sdk-trace-node'
+import {OTLPTraceExporter} from '@opentelemetry/exporter-trace-otlp-proto'
 
 const startApp = async () => {
   try {
@@ -44,6 +47,23 @@ const startApp = async () => {
           }
         }
       ))
+      .use(
+        opentelemetry({
+          spanProcessors: [
+            new BatchSpanProcessor(
+              new OTLPTraceExporter({
+                url: "https://oo.fcs.ninja/api/default/traces",
+                headers: {
+                  Authorization: "Basic YWRtaW5AZmNzLm5pbmphOnBLUjh4TnZFeGZ4NTF3T1A=",
+                  organization: "default",
+                  "stream-name": "elysia-template-v3"
+                }
+              })
+            )
+          ],
+          serviceName: "elysia-template-v3",
+        })
+      )
       .group("/api", group =>
         group.use(userController)
       )
