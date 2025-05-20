@@ -17,9 +17,6 @@ const startApp = async () => {
     await dataSource.orm.getSchemaGenerator().updateSchema();
     const app = new Elysia()
       .use(cors())
-      .onBeforeHandle(() => RequestContext.enter(dataSource.em))
-      .onAfterHandle(responseMiddleware)
-      .onError(errorMiddleware)
       .get("/", () => "It's works!")
       .use(swagger(
         {
@@ -48,6 +45,9 @@ const startApp = async () => {
         }
       ))
       .use(opentelemetry())
+      .onBeforeHandle(() => RequestContext.enter(dataSource.em))
+      .onAfterHandle(responseMiddleware)
+      .onError(errorMiddleware)
       .group("/api", group =>
         group.use(userController)
       )
